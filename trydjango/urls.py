@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from restaurants.views import home, about
+from restaurants.views import home, other, AboutView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home),
-    url(r'^about/$', about),
+    url(r'^other/$', other),
+    url(r'^about/(?P<id>\d+)/$', AboutView.as_view()),
 ]
