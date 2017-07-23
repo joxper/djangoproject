@@ -13,4 +13,11 @@ def home(request):
 		"num": num,
 		"list": list
 		}
-	return render(request, "base.html", context )
+	return render(request, "home.html", context )
+
+
+def about(request):
+	context = {
+
+		}
+	return render(request, "about.html", context )

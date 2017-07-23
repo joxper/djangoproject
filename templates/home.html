@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block head_title %} Home || {{ block.super}} {% endblock head_title %}
+
+{% block content %}
+<div class="starter-template">
+  <h1>{% if html_var %}</h1>
+  <p class="lead">{%verbatim%}{{num}}{%endverbatim%} aaaaa</p>
+  {% endif %}
+
+  <p class="lead">
+
+  <h1> {{ block.super }} </h1>
+
+      {% for item in list %}
+
+        {% if item|divisibleby:"2" %} 
+
+          blablabla
+
+        {% endif %}
+
+          {{item}}<br>
+      {% endfor %}
+
+  </p>
+</div>
+
+{% endblock content %}
