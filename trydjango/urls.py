@@ -17,11 +17,15 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from restaurants.views import HomeView, AboutView, AboutTemplateView
+from basics.views import HomeView, AboutView, AboutTemplateView
+
+from restaurants.views import restaurant_listview
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view()),
     url(r'^other/$', TemplateView.as_view(template_name='other.html')),
     url(r'^about/(?P<id>\d+)/$', AboutTemplateView.as_view()),
+
+    url(r'^restaurants/$', restaurant_listview),
 ]

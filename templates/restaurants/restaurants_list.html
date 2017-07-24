@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block head_title %} Restaurants || {{ block.super}} {% endblock head_title %}
+
+{% block content %}
+<div class="starter-template">
+  <h1>Restaurants</h1>
+  <p class="lead">
+  	<ul>
+	  {% for item in list %}
+	  	<h2> {{item.name}} </h2>
+	  {% endfor %}
+	</ul>  
+  </p>
+</div>
+
+{% endblock content %}
