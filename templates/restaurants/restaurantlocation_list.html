@@ -3,11 +3,11 @@
 
 {% block content %}
 <div class="starter-template">
-  <h1>Restaurants</h1>
+  <h1>Restaurantsssss</h1>
   <p class="lead">
   	<ul>
-	  {% for item in object_list %}
-	  	<h2> {{item.name}} </h2>
+	  {% for obj in object_list %}
+	  	<a href="/restaurants/{{obj.slug}}"> <h2> {{obj.name}} </h2></a>
 	  {% endfor %}
 	</ul>  
   </p>
