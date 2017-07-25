@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block head_title %} Menu Items || {{ block.super}} {% endblock head_title %}
+
+{% block content %}
+<div class="starter-template">
+  <h1>Menu Items </h1>
+  <p class="lead">
+  	<ul>
+	  	<a href="{{ object.get_absolute_url }}"> <h2> {{object.name}} </h2></a><br/>
+
+	  	<p>Location: {{ object.restaurant.name }}</p>
+{# 	  	<a href="/restaurants/{{object.slug}}"> <h2> {{object.name}} </h2></a> #}
+		{% if object.contents %}
+		    
+		
+		
+		<h3>Contents</h3>
+		<ul>
+			{% for item in object.get_contents %}
+				<li>{{ item }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% if object.excludes %}
+		<h3>Excludes</h3>
+		<ul>
+			{% for item in object.get_excludes %}
+				<li>{{ item }}</li>
+			{% endfor %}
+		</ul>		
+		{% endif %}
+	</ul>  
+  </p>
+</div>
+
+{% endblock content %}
