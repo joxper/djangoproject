@@ -13,35 +13,26 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, PasswordResetView
 
 from basics.views import HomeView, AboutView, AboutTemplateView
 
-from restaurants.views import (
-    restaurant_listview,
-    RestaurantListView,
-    RestaurantDetailView,
-    RestaurantCreateView,
-    restaurant_createview,
-    )
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', HomeView.as_view()),
+    url(r'^$', HomeView.as_view(), name='home'),
 
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^password_reset/$', PasswordResetView.as_view(), name='password_reset'),
 
 
-    url(r'^other/$', TemplateView.as_view(template_name='other.html')),
-    url(r'^about/(?P<id>\d+)/$', AboutTemplateView.as_view()),
+    url(r'^other/$', TemplateView.as_view(template_name='other.html'), name='other'),
+    url(r'^about/(?P<id>\d+)/$', AboutTemplateView.as_view(), name='about'),
 
-    url(r'^restaurants/$', RestaurantListView.as_view()),
-#    url(r'^restaurants/create/$', restaurant_createview),
-    url(r'^restaurants/create/$', RestaurantCreateView.as_view()),
-#    url(r'^restaurants/(?P<slug>\w+)/$', RestaurantListView.as_view()),
-    url(r'^restaurants/(?P<slug>[\w-]+)/$', RestaurantDetailView.as_view()), #pk default
+
+    url(r'^restaurants/', include('restaurants.urls', namespace='restaurants')),
 ]

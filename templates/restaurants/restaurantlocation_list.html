@@ -7,7 +7,8 @@
   <p class="lead">
   	<ul>
 	  {% for obj in object_list %}
-	  	<a href="/restaurants/{{obj.slug}}"> <h2> {{obj.name}} </h2></a>
+	  	<a href="{{ obj.get_absolute_url }}"> <h2> {{obj.name}} </h2></a>
+{# 	  	<a href="/restaurants/{{obj.slug}}"> <h2> {{obj.name}} </h2></a> #}
 	  {% endfor %}
 	</ul>  
   </p>
