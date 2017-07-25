@@ -11,15 +11,9 @@
 
   </h1>
   <p class="lead">
-  {% if form.errors.non_field_errors %}
-     {{ form.errors.non_field_errors }}
-  {% endif %}
-  </p>
-  <form method="POST"> 
-    {% csrf_token %}
-  	{{ form.as_p }}
-  	<button type="submit" class="btn btn-primary">SAVE</button>
-  </form>
+
+  {% includes 'snipets/form.html' %}
+
 </div>
 
 {% endblock content %}

@@ -2,7 +2,7 @@ import random
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -39,7 +39,7 @@ def restaurant_listview(request):
 	}
 	return render(request, template_name, context)
 
-class RestaurantListView(ListView):
+class RestaurantListView(LoginRequiredMixin, ListView):
 
 	def get_queryset(self):
 		print(self.kwargs)
@@ -50,11 +50,12 @@ class RestaurantListView(ListView):
 				Q(category__icontains=slug)
 			)
 		else:
-			queryset = RestaurantLocation.objects.all()
+			queryset = RestaurantLocation.objects.filter(owner=self.request.user)
 		return queryset
 
-class RestaurantDetailView(DetailView):
-	queryset = RestaurantLocation.objects.all() #.filter(category__iexact='asian')
+class RestaurantDetailView(LoginRequiredMixin, DetailView):
+	def get_queryset(self):
+		return RestaurantLocation.objects.filter(owner=self.request.user) #.filter(category__iexact='asian')
 
 	# def get_context_data(self, *args, **kwargs):
 	# 	print(self.kwargs)
@@ -80,3 +81,17 @@ class RestaurantCreateView(LoginRequiredMixin, CreateView):
 		context = super(RestaurantCreateView, self).get_context_data(*args, **kwargs)
 		context['title'] = 'Add Restaurant'
 		return context
+
+class RestaurantUpdateView(LoginRequiredMixin, UpdateView):
+	form_class = RestaurantLocationCreateForm
+	template_name =	'restaurants/detail-update.html'
+	# success_url = "/restaurants"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(RestaurantUpdateView, self).get_context_data(*args, **kwargs)
+		name = self.get_object().name
+		context['title'] = 'Update'
+		return context		
+
+	def get_queryset(self):
+		return RestaurantLocation.objects.filter(owner=self.request.user)

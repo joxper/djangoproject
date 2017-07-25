@@ -15,13 +15,23 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'other' %}">Other</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Restaurants</a>
-        <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="{% url 'restaurants:list' %}">List</a>
-          <a class="dropdown-item" href="{% url 'restaurants:create' %}">Create</a>
-        </div>
-      </li>
+      {% if request.user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Restaurants</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item" href="{% url 'restaurants:list' %}">List</a>
+            <a class="dropdown-item" href="{% url 'restaurants:create' %}">Create</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menus</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item" href="{% url 'menus:list' %}">List</a>
+            <a class="dropdown-item" href="{% url 'menus:create' %}">Create</a>
+          </div>
+        </li>      
+      {% endif %}
+
     </ul>
     <form type="GET" action="#" class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
