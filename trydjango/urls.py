@@ -20,6 +20,7 @@ from django.contrib.auth.views import LoginView, PasswordResetView
 
 from basics.views import HomeView, AboutView, AboutTemplateView
 
+from profiles.views import ProfileFollowToggle
 
 
 urlpatterns = [
@@ -39,4 +40,6 @@ urlpatterns = [
     url(r'^items/', include('menus.urls', namespace='menus')),
 
     url(r'^profiles/', include('profiles.urls', namespace='profiles')),
+
+    url(r'^follow/$', ProfileFollowToggle.as_view(), name='follow'),
 ]
