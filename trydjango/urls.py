@@ -37,4 +37,6 @@ urlpatterns = [
     url(r'^restaurants/', include('restaurants.urls', namespace='restaurants')),
 
     url(r'^items/', include('menus.urls', namespace='menus')),
+
+    url(r'^profiles/', include('profiles.urls', namespace='profiles')),
 ]

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block head_title %} {{ user.username}} || {{ block.super}} {% endblock head_title %}
+
+{% block content %}
+<div class="starter-template">
+  <h1>Profile {{ user.username}}  </h1>
+  {% if user.item_set.all.exists %}
+
+	  {% for restaurant in user.restaurantlocation_set.all %}
+		<div class="jumbotron jumbotron-fluid">
+			<div class="container">
+				<h1 class="display-3">{{ restaurant.title }} </h1> <h7 class="display-7">{{ restaurant.location }} | {{ restaurant.category }}</h7><br/>
+		  		<ul class="list-group">
+		  			{% for item in restaurant.item_set.all %}
+		  					<h3 class="display-5">{{ item.name }}</h3>
+		  				{% for ing in item.get_contents %}
+		  					<li class="list-group-item list-group-item-success">
+		  						{{ ing }}
+		  					</li>
+		  				{% endfor %}	
+		  				{% for ing in item.get_excludes %}
+		  					<li class="list-group-item list-group-item-danger">
+		  						{{ ing }}
+		  					</li>
+		  				{% endfor %}
+		  			{% endfor %}
+		  		</ul>
+			</div>
+		</div>
+	   {% endfor %} 
+
+  {% else %}
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-3">No data</h1>
+			<p class="lead">Add new restaurant!</p>
+		</div>
+	</div>
+{% endif %}	
+</div>
+
+{% endblock content %}
