@@ -16,11 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
-from django.contrib.auth.views import LoginView, PasswordResetView
+from django.contrib.auth.views import LoginView, PasswordResetView, LogoutView
 
-from basics.views import HomeView, AboutView, AboutTemplateView
+from basics.views import AboutView, AboutTemplateView
 
-from profiles.views import ProfileFollowToggle
+from profiles.views import ProfileFollowToggle, RegisterCreateView, activate_user_view
+
+from menus.views import HomeView
 
 
 urlpatterns = [
@@ -28,7 +30,10 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
 
     url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^password_reset/$', PasswordResetView.as_view(), name='password_reset'),
+    url(r'^register/$', RegisterCreateView.as_view(), name='register'),
+    url(r'^activate/(?P<code>[a-z0-9].*)/$', activate_user_view, name='activate'),
 
 
     url(r'^other/$', TemplateView.as_view(template_name='other.html'), name='other'),

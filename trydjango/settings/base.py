@@ -27,6 +27,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.0.35']
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'notifications@avantpage.com'
+EMAIL_HOST_PASSWORD = '&*c0%eTs7z9CYvc'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Notifications Avantpage <notifications@avantpage.com>'
+
+ADMINS = (
+    ('Admin', 'joxper@gmail.com'),
+)
 
 # Application definition
 

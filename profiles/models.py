@@ -1,7 +1,10 @@
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
 
+from .utils import code_generator
 # Create your models here.
 User = settings.AUTH_USER_MODEL
 
@@ -23,6 +26,7 @@ class Profile(models.Model):
 	user 			= models.OneToOneField(User)
 	followers		= models.ManyToManyField(User, related_name='is_following', blank=True)
 	#following		= models.ManyToManyField(User, related_name='following', blank=True)
+	activation_key 	= models.CharField(blank=True, null=True, max_length=50)
 	activated 		= models.BooleanField(default=False)
 	timestamp		= models.DateTimeField(auto_now_add=True)
 	updated			= models.DateTimeField(auto_now=True)	
@@ -31,6 +35,27 @@ class Profile(models.Model):
 
 	def __str__(self):
 		return self.user.username
+
+	def send_activation_email(self):
+		if not self.activated:
+			self.activation_key = code_generator()
+			self.save()
+			path_ = reverse('activate', kwargs={"code": self.activation_key})
+			subject = 'Activation Email'
+			from_email = settings.DEFAULT_FROM_EMAIL
+			message = 'Este es mi pais, esta es mi gente, gente buena que trabaja:'+path_
+			recipient_list = [self.user.email]
+			html_message = '<h1>Este es mi pais, esta es mi gente, gente buena que trabaja:</h1><p>'+path_+'</p>'
+			sent_email = send_mail(
+				subject,
+				message,
+				from_email,
+				recipient_list,
+				fail_silently=False,
+				html_message=html_message
+				)
+			return sent_email
+
 
 """
 	models.ForeignKey(User) user.profile_set.all()

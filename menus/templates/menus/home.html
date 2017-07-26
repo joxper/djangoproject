@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block head_title %} Following || {{ block.super}} {% endblock head_title %}
+
+{% block content %}
+<div class="starter-template">
+	  {% for obj in object_list %}
+	  	<div class="jumbotron jumbotron-fluid">
+			<div class="container">
+				<h1 class="display-3">{{ obj.name }}</h1>
+				<a href="{% url 'profiles:detail' username=obj.user.username %}">
+					<h2 class="display-5">{{ obj.user.username }} </h2>
+				</a>
+				<a href="{% url 'profiles:detail' username=obj.user.username %}?q={{obj.restaurant.location}}">
+				<h7 class="display-7">{{ obj.restaurant.location }}
+				</a>	
+				 | 
+				<a href="{% url 'profiles:detail' username=obj.user.username %}?q={{obj.restaurant.category}}">
+				 {{ obj.restaurant.category }}</h7>
+				</a><br/>
+		  		<ul class="list-group">			
+	  				{% for ing in item.get_contents %}
+	  					<li class="list-group-item list-group-item-success">
+	  						<a href="{% url 'profiles:detail' username=obj.user.username %}?q={{ ing }}">{{ ing }}</a>
+	  					</li>
+	  				{% endfor %}	
+	  				{% for ing in item.get_excludes %}
+	  					<li class="list-group-item list-group-item-danger">
+	  						{{ ing }}
+	  					</li>
+	  				{% endfor %}
+		  		</ul>
+			</div>
+		</div>
+	  {% endfor %}
+</div>
+
+{% endblock content %}
+
+
+
+  
+  <p class="lead">
+  	<ul>
+
+	</ul>  
+  </p>
